@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/nicepage.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/Home.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/dropzone.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/c3.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/my.css')}}">
+</head>
+<body class="u-body">
+    <section class="u-align-center u-clearfix u-custom-color-3 u-section-1" id="carousel_cdc8">
+      <h2 class="u-text u-text-1">Cat Classifier</h2>
+      <h2 class="u-heading-font u-subtitle u-text u-text-2">By Jingwei Luo </h2>
+      <div class="u-custom-color-1 u-expanded-width u-shape u-shape-rectangle u-shape-1"></div>
+      <img alt="" class="u-image u-image-default u-image-1" src="{{ url_for('static', filename= 'images/pexels-photo-6027989.jpeg') }}">
+    </section>
+    <section class="u-align-center u-clearfix u-section-2" id="carousel_a966">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <div class="u-align-center u-container-style u-expanded-width-sm u-expanded-width-xs u-group u-group-1">
+          <div class="u-container-layout u-container-layout-1">
+            <p class="u-text u-text-1">When you bump into a cute cat on Instagram or in the street, you probably wonder what breed it is. However, many cat breeds are hard to be identified by human’s eye, even with the help of Google. After browsing and comparing pictures of dozens of cat species, you are pretty sure that what you see is a Bengal cat. However, reality can be tricky — what you actually see is a mixed breed.
+            </p>
+              <p class="u-text u-text-1">The Cat Classifier is designed to help you accurately identify a cat. It uses <a href="https://en.wikipedia.org/wiki/Machine_learning">machine learning</a> techniques and has trained with thousands of cats’ pictures. Just simply drag a picture of a cat into the classifier below and the results will be displayed in seconds. Give it a try!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-align-center u-clearfix u-section-3" id="sec-0b3d">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <div id="dropzone" class="u-form u-form-1">
+          <form class="dropzone needsclick dz-clickable"  id="photoUpload">
+              <div class="dz-message needsclick">
+                <button type="button" class="dz-button">Drop the cat's photo here or click to upload.</button><br>
+              </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="u-align-center u-clearfix u-section-2" style="visibility: hidden;" id="carousel_4665">
+      <div class="u-clearfix u-sheet u-valign-middle">
+        <div class="u-align-center u-container-style u-expanded-width-sm u-expanded-width-xs u-group u-group-1">
+          <div class="u-container-layout u-container-layout-1">
+              <h3 class="u-align-left u-text u-head-1">Result</h3>
+            <p id="result" class="u-text u-text-1"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="u-align-center u-clearfix" id="carousel_05ed">
+        <div id="breed_info" class="u-clearfix u-sheet u-sheet-1"></div>
+    </section>
+
+    <section class="u-backlink u-clearfix u-grey-80">
+      <p class="u-text">
+          <span>This website is created by Jingwei Luo</span><br/>
+          <span>Jluo003@gold.ac.uk</span>
+      </p>
+    </section>
+
+    <script src="{{ url_for('static', filename= 'js/jquery-3.5.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'js/d3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'js/c3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'js/dropzone.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'js/my.js') }}"></script>
+
+</body>
+
+</html>
