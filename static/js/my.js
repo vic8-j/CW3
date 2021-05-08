@@ -6,6 +6,7 @@ Dropzone.options.photoUpload = {
             $("#breed_info").empty();
             $("#breed_info").append("<div id='breed_list' class='u-list u-list-1'></div>");
             display_breeds(data);
+            accordion_event();
         });
         this.on("thumbnail", function() {
             $('#carousel_05ed').addClass('u-section-5');
@@ -33,16 +34,25 @@ function display_breeds(data) {
      //$("#breed_list").append(div_repeater);
      for(key in data) {
         var div_container = $("<div></div>");
-        div_container.addClass("u-container-style u-custom-color-2 u-list-item u-repeater-item u-list-item-1")
+        div_container.addClass("accordion u-container-style u-list-item u-repeater-item u-list-item-1")
         $("#breed_list").append(div_container);
         var div_item = $("<div></div>");
         div_item.addClass("u-container-layout u-similar-container u-container-layout-1")
         div_container.append(div_item);
         var image = data[key]['name'].replace(' ', '-');
         div_item.append("<div class='u-image u-image-circle u-image-"+image+"'></div>");
-        div_item.append("<h6 class='u-text u-text-1'>"+data[key]['name']+"</h6>");
-        div_item.append("<p class='u-small-text u-text u-text-variant u-text-2'>(Possibility: "+data[key]["prob"]+"%&nbsp;)</p>");
-        div_item.append("<p class='u-text u-text-3'>"+data[key]["desc"]+"</p>");
+        div_item.append("<h6 class='u-text u-text-1'>"+data[key]['name']+"&nbsp;&nbsp;(Possibility:&nbsp;"+data[key]["prob"]+"%)</h6>");
+        //div_item.append("<p class='u-small-text u-text u-text-variant u-text-2'>(%&nbsp;Possibility: "+data[key]["prob"]+"%&nbsp;)</p>");
+        var div_prob = $("<div></div>");
+        div_prob.addClass("panel u-text u-text-3");
+        var cat_img = $("<img></img>");
+        cat_img.attr("src","static/images/"+image+".jpg");
+        cat_img.addClass("cat_breed_image");
+        cat_img.attr("align","center");
+        div_prob.append(cat_img);
+        div_prob.append(data[key]["desc"]);
+        div_item.append(div_prob);
+        div_item.find("p").addClass("cat_des_text");
      };
 };
 
@@ -86,7 +96,24 @@ function show_result(data) {
         var res_str = "Wow! It is more likely a <b>" + data[0]["name"] + "</b> cat, with <b>"+data[0]["prob"]+"%</b> possibility. Do I guess right? Check the data below.";
         $("#result").html(res_str);
     } else {
-        var res_str = "Wow! It is likely to be a mixed breed, with <b>"+data[0]["prob"]+"%</b> chance of being a <b>"+data[0]["name"]+"</b> cat, <b>"+data[1]["prob"]+"%</b> chance of being a <b>"+data[1]["name"]+"</b> cat and <b>"+data[2]["prob"]+"%</b> chance of being a <b>"+data[2]["name"]+"</b> cat. Check the data below.";
+        var res_str = "Lol! It is likely to be a mixed breed, with <b>"+data[0]["prob"]+"%</b> chance of being a <b>"+data[0]["name"]+"</b> cat, <b>"+data[1]["prob"]+"%</b> chance of being a <b>"+data[1]["name"]+"</b> cat and <b>"+data[2]["prob"]+"%</b> chance of being a <b>"+data[2]["name"]+"</b> cat. Check the data below.";
         $("#result").html(res_str);
     }
 };
+
+function accordion_event() {
+    var acc = $(".accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        $(this).toggleClass("active");
+        var panel = $(this).find(".panel");
+        if (panel.css('max-height') != '0px') {
+          panel.css('max-height', 0);
+        } else {
+          panel.css('max-height', panel[0].scrollHeight+"px");
+        }
+      });
+    }
+}
