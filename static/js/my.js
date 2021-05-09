@@ -1,4 +1,4 @@
-// Create image upload box and initialise configuration
+// Create image upload box and add events
 Dropzone.options.photoUpload = {
     init: function() {
         this.on("success", function(file, data) {
