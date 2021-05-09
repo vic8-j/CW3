@@ -1,4 +1,4 @@
-// Create image upload box and add events
+// Create image upload box and initialise configuration
 Dropzone.options.photoUpload = {
     init: function() {
         this.on("success", function(file, data) {
@@ -8,7 +8,7 @@ Dropzone.options.photoUpload = {
             display_breeds(data);
             accordion_event();
         });
-        this.on("thumbnail", function() {
+        this.on("uploadprogress", function(file) {
             $('#carousel_05ed').addClass('u-section-5');
             $('#carousel_4665').css('visibility', 'hidden');
             this.removeAllFiles();
@@ -18,11 +18,16 @@ Dropzone.options.photoUpload = {
                 scrollTop: ($('#carousel_4665').offset().top)
             },500);
         });
+        this.on("error", function(file, message) {
+            $('#error_msg').text(message);
+            this.removeAllFiles(file);
+        });
     },
     url: "/photoUpload",
     parallelUploads: 1,
     maxFilesize: 1,
-    acceptedFiles: "image/*"
+    acceptedFiles: "image/*",
+    maxFilesize: 0.5
 };
 
 // Display the predicted breed list.
