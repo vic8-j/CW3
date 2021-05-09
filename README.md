@@ -16,5 +16,5 @@ To create your own CNN, you need to allocate the downloaded cat data into the tr
 
 After classifying the dataset,  using the ImageDataGenerator model in keras to collate the data, and using Sequential in Keras to build the CNN. Once the network is built, the data needs to be fed to the network for training, which can be done directly using fit_generator in keras. The relative code can be found in **ModelGenerator.py**.
 
-In addition to using our own network for training and learning, we can also use the weights trained in keras for migration learning, which can increase the success rate of image recognition despite the lack of training data. I am using ResNet152V2, and the code can be found in **TransferModelGenerator.py**.
+In addition to using our own network for training and learning, we can also use the weights trained in keras for migration learning, which can increase the success rate of image recognition when lacking training data. I am using ResNet152V2, and the code can be found in **TransferModelGenerator.py**.
 
