@@ -6,13 +6,13 @@ To create your own CNN, you need to allocate the downloaded cat data into the tr
 	- train
 		- Bengal
 		- British Shorthair
-		- Siamese
+		- Siamese</br>
 		...
 	- validation
 		- Bengal
 		- British Shorthair
-		- Siamese
-	...
+		- Siamese</br>
+		...
 
 After classifying the dataset,  using the ImageDataGenerator model in keras to collate the data, and using Sequential in Keras to build the CNN. Once the network is built, the data needs to be fed to the network for training, which can be done directly using fit_generator in keras. The relative code can be found in **ModelGenerator.py**.
 
