@@ -26,8 +26,8 @@ Dropzone.options.photoUpload = {
     url: "/photoUpload",
     parallelUploads: 1,
     maxFilesize: 1,
-    acceptedFiles: "image/*",
-    maxFilesize: 0.5
+    acceptedFiles: ".jpeg,.jpg,.png",
+    maxFilesize: 0.3
 };
 
 // Display the predicted breed list.
@@ -61,51 +61,82 @@ function display_breeds(data) {
      };
 };
 
-// Create a pie chart of breeds
+// Create a bar chart for breeds
 function breed_chart(cdata) {
     $("#breed_list").append("<div id='chart'></div>");
-    var data = {};
-    var names = [];
-    cdata.forEach(function (e) {
-        names.push(e.name);
-        data[e.name] = e.prob;
-    });
     var chart = c3.generate({
     data: {
-        json: data,
-        type : 'pie'
+        json: cdata,
+        type : 'bar',
+        keys: {
+            x: 'name',
+            value: ['prob']
+        },
+        colors: {prob: function(d) {
+            if (d.value >= 90){
+                return '#006d77';
+            } else {
+                return '#e29578';
+            }
+         }}
     },
-    key: {
-        x: 'name',
-        value: ['prob']
+    axis: {
+        x: {
+            label: {
+                text: 'Breeds',
+                position: 'outer',
+            },
+            type: 'category',
+        },
+        y: {
+            label: {
+                text: 'Probability (%)',
+                position: 'outer'
+            },
+            padding: {
+                top: 0,
+                bottom: 0
+            }
+        }
     },
-    color: {
-        pattern: ['#264653','#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
+    bar: {
+        width: {
+            ratio: 0.5
+        }
     },
     size: {
-        height: 460
-    }
-});
+        height: 340,
+        width: 680
+    },
+    });
 };
 
 // Show the summary of result.
 function show_result(data) {
     $('#carousel_4665').css('visibility', 'visible');
-    var breed_flag = true;
+    pro_breeds = [];
+    res_str = "";
     for(key in data) {
         if (data[key]["prob"] > 90) {
-            breed_flag = false;
+            pro_breeds.push(data[key]);
         };
     };
-    if (breed_flag == false) {
-        var res_str = "Wow! It is more likely a <b>" + data[0]["name"] + "</b> cat, with <b>"+data[0]["prob"]+"%</b> possibility. Do I guess right? Check the data below.";
-        $("#result").html(res_str);
+    if (pro_breeds.length == 0) {
+        var res_str = "&#128517;&nbsp;It seems this breed of cat haven't been collected in our system because all breed predictions for this cat are below <b>90%</b>. Even so, we still give you some of the most likely answers. Check the information below."
+    } else if (pro_breeds.length == 1) {
+        var res_str = "Wow! It is more likely to be a <b>" + pro_breeds[0]["name"] + "</b> cat, whose probability is more than <b>90%</b> . Do I guess right? Check the information below.";
     } else {
-        var res_str = "Lol! It is likely to be a mixed breed, with <b>"+data[0]["prob"]+"%</b> chance of being a <b>"+data[0]["name"]+"</b> cat, <b>"+data[1]["prob"]+"%</b> chance of being a <b>"+data[1]["name"]+"</b> cat and <b>"+data[2]["prob"]+"%</b> chance of being a <b>"+data[2]["name"]+"</b> cat. Check the data below.";
-        $("#result").html(res_str);
+        var res_str = "&#128521;&nbsp;It is likely to be a mixed breed, "
+        for (i = 0; i < pro_breeds.length; i++) {
+          res_str += "with <b>"+pro_breeds[i]["prob"]+"%</b> similar to the <b>"+pro_breeds[i]["name"]+"</b> cat, ";
+        }
+        res_str = res_str.substring(0,res_str.lastIndexOf(','));
+        res_str += ". Check the information below."
     }
+    $("#result").html(res_str);
 };
 
+// Add accordion event for each cat item in the prediction board
 function accordion_event() {
     var acc = $(".accordion");
     var i;
